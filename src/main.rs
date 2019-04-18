@@ -1,27 +1,24 @@
 //! Gotham web framework router and handlers for sudoku solver 
 
-use gotham::router::Router;
-use gotham::router::builder::*;
+use actix_web::{server, App, http};
 
 mod handlers;
 use handlers::{display, solve};
 
 mod sudoku;
 
-fn router() -> Router {
-    build_simple_router(|route| {
-        route.scope("/api", |route| {
-            route.post("/solve").to(solve);
-            route.post("/display").to(display);
-        });
-    })
-}
-
-/// Start a server and use a `Router` to dispatch requests
 fn main() {
     let addr = "localhost:7878";
     println!("Listening for requests at http://{}", addr);
-    gotham::start(addr, router())
+
+    server::new(|| App::new()
+                    .prefix("/api")
+                    .resource("/solve", |r| r.method(http::Method::POST).f(solve))
+                    .resource("/display", |r| r.method(http::Method::POST).f(display))
+                )
+                .bind(addr)
+                .unwrap()
+                .run();
 }
 
 #[cfg(test)]
