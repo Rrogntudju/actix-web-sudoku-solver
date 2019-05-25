@@ -3,8 +3,6 @@ use actix_web::{server, App, http};
 mod handlers;
 use handlers::{display, solve};
 
-mod sudoku;
-
 fn main() {
     let addr = "localhost:7878";
     println!("Listening for requests at http://{}", addr);

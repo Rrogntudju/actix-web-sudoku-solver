@@ -2,7 +2,9 @@ use actix_web::{AsyncResponder, FutureResponse, HttpMessage, HttpRequest, HttpRe
 use futures::{Future, future, Stream};
 use serde::{Deserialize, Serialize};
 use bytes::Bytes;
-use crate::sudoku::{Sudoku, PuzzleError};
+
+mod sudoku;
+use sudoku::{Sudoku, PuzzleError};
 
 #[derive(Deserialize)]
 struct SudokuRequest {
