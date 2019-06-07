@@ -1,4 +1,4 @@
-use actix_web::{AsyncResponder, FutureResponse, HttpMessage, HttpRequest, HttpResponse, error::PayloadError};
+use actix_web::{web::Payload, HttpResponse, error::{Error, PayloadError}};
 use futures::{Future, future, Stream};
 use serde::{Deserialize, Serialize};
 use bytes::Bytes;
@@ -65,9 +65,8 @@ fn display_sudoku(payload: Result<Bytes, PayloadError>) -> impl Future<Item=Vec<
     }
 }
 
-pub fn solve(req: &HttpRequest) -> FutureResponse<HttpResponse> {
-    req .payload()
-        .concat2()
+pub fn solve(body: Payload) -> impl Future<Item = HttpResponse, Error = Error> {
+    body.concat2()
         .then(solve_sudoku)
         .then(|solve_result| { 
                     let sudoku_response = 
@@ -83,12 +82,10 @@ pub fn solve(req: &HttpRequest) -> FutureResponse<HttpResponse> {
                     )
                 }
         )
-        .responder()
 }
 
-pub fn display(req: &HttpRequest) -> FutureResponse<HttpResponse> {
-    req .payload()
-        .concat2()
+pub fn display(body: Payload) -> impl Future<Item = HttpResponse, Error = Error> {
+    body.concat2()
         .then(display_sudoku)
         .then(|grid_result| { 
                     let sudoku_response = 
@@ -104,6 +101,5 @@ pub fn display(req: &HttpRequest) -> FutureResponse<HttpResponse> {
                     )
                 }
         )
-        .responder()
 } 
 
