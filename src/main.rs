@@ -25,13 +25,13 @@ async fn main() -> std::io::Result<()> {
 }
 
 #[cfg(test)]
+#[allow(unused_must_use)]
 mod tests {
     use super::*;
     use actix_web::{http, test};
     use bytes::Bytes;
 
     #[test]
-    #[allow(unused_must_use)]
     fn solve_ok() {
         async {
             let mut app = test::init_service(
@@ -61,7 +61,6 @@ mod tests {
     }
 
     #[test]
-    #[allow(unused_must_use)]
     fn display_ok() {
         async {
             let mut app = test::init_service(
@@ -91,7 +90,6 @@ mod tests {
     }
 
     #[test]
-    #[allow(unused_must_use)]
     fn solve_err_puzzle() {
         async {
             let mut app = test::init_service(
@@ -121,7 +119,6 @@ mod tests {
     }
 
     #[test]
-    #[allow(unused_must_use)]
     fn solve_err_json() {
         async {
             let mut app = test::init_service(
