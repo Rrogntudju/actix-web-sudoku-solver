@@ -114,8 +114,8 @@ mod tests {
 
             let body = test::read_body(resp).await;
             assert_eq!(body, Bytes::from_static(
-            r#"{"status":"fail","data":"","message":"Invalid Grid.  Provide a string of 81 digits with 0 or . for empties."}"#
-            .as_bytes())
+                r#"{"status":"fail","data":"","message":"Invalid Grid.  Provide a string of 81 digits with 0 or . for empties."}"#
+                .as_bytes())
             );
         };
     }
@@ -144,9 +144,9 @@ mod tests {
 
             let body = test::read_body(resp).await;
             assert_eq!(body, Bytes::from_static(
-            r#"{"status":"fail","data":"","message":"Invalid Grid.  Provide a string of 81 digits with 0 or . for empties."}"#
-            .as_bytes())
-        );
+                r#"{"status":"fail","data":"","message":"Invalid Grid.  Provide a string of 81 digits with 0 or . for empties."}"#
+                .as_bytes())
+            );
         };
     }
 }
